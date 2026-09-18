@@ -32,9 +32,11 @@ Open `index.html` in a browser, or host the folder on any static file host.
 
 ### GitHub Pages
 
-1. Push this repository to GitHub.
-2. In the repository settings, enable **Pages** with the source set to the root of the main branch.
-3. Open `https://<user>.github.io/<repo>/`.
+1. Push this repository to GitHub on branch `main`.
+2. In **Settings → Pages**, select **GitHub Actions** as the source.
+3. Open `https://benedikt-frenzel.github.io/vcf-compliance/`.
+
+The included Pages workflow runs the full Python and Node test suites before deployment.
 
 ### Importing the generated files
 

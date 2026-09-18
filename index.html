@@ -1,182 +1,101 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VCF Operations Scorecard Builder</title>
-<link rel="stylesheet" href="assets/vendor/city-1.1.0/city.css">
-<link rel="stylesheet" href="assets/vendor/clr-ui-18.2.1/clr-ui.min.css">
-<style>
-  body { font-family: "Clarity City", Metropolis, "Avenir Next", "Helvetica Neue", Arial, sans-serif; }
-  .content-area { padding: 0.6rem 1rem 2rem; }
-  .toolbar { display: flex; flex-wrap: wrap; gap: 0.8rem; align-items: flex-end; margin: 0.6rem 0; }
-  .toolbar .clr-control-container { margin-top: 0; }
-  .toolbar label { font-weight: 600; display: block; margin-bottom: 0.1rem; }
-  .table-wrapper { max-height: 62vh; overflow: auto; border: 1px solid #ccc; border-radius: 3px; }
-  table.table { margin-top: 0; }
-  table.table thead th { position: sticky; top: 0; background: #fafafa; z-index: 2; box-shadow: 0 1px 0 #ccc; }
-  table.table td { vertical-align: middle; }
-  code.key { font-size: 0.55rem; word-break: break-all; }
-  .value-input { min-width: 12rem; }
-  .value-input.invalid { border-color: #c92100; }
-  tr.modified td { background: #eef6fc; }
-  tr.excluded td { opacity: 0.45; }
-  .row-actions { white-space: nowrap; }
-  .counts { margin-left: auto; display: flex; gap: 0.4rem; align-items: center; }
-  /* visually-hidden utility for accessible names of icon-only controls */
-  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-  .note-trigger { padding: 0 0.1rem; margin-left: 0.15rem; border: none; background: none;
-    color: #00567a; font-size: 0.75rem; line-height: 1; cursor: help; vertical-align: baseline; }
-  .note-trigger:focus { outline: 2px solid #00567a; outline-offset: 1px; border-radius: 2px; }
-  /* inline wrapper that owns hover/focus for the (possibly disabled) download buttons */
-  .download-wrap { display: inline-block; }
-  .download-wrap:focus { outline: 2px solid #00567a; outline-offset: 1px; border-radius: 2px; }
-  footer { margin-top: 1.2rem; color: #565656; font-size: 0.55rem; }
-  .card-block .btn { margin-right: 0.4rem; }
-  .settings-grid { display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end; }
-  .settings-grid .clr-input { min-width: 14rem; }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Build custom VCF Operations compliance scorecards and alert definitions from a curated security benchmark.">
+  <title>VCF Compliance · Scorecard Builder</title>
+  <link rel="stylesheet" href="assets/vendor/city-1.1.0/city.css">
+  <link rel="stylesheet" href="assets/vendor/clr-ui-18.2.1/clr-ui.min.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-<header class="header header-1">
+<body cds-theme="light">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="header header-6 site-header">
   <div class="branding">
-    <span class="title">VCF Operations Scorecard Builder</span>
+    <a class="nav-link" href="./" aria-label="VCF Compliance home">
+      <span class="brand-mark" aria-hidden="true">✓</span>
+      <span class="brand-copy"><span class="title">VCF Compliance</span><span class="subtitle">Operations scorecard builder</span></span>
+    </a>
   </div>
-  <div class="header-actions">
-    <span class="badge badge-gray">unofficial personal project</span>
-  </div>
+  <nav class="header-actions" aria-label="VCF Tools">
+    <a class="nav-link hide-mobile" href="https://benedikt-frenzel.github.io/vcf-tools/">All tools</a>
+    <a class="nav-link hide-mobile" href="https://benedikt-frenzel.github.io/vcf-ports/">Ports</a>
+    <a class="nav-link active" href="./" aria-current="page">Compliance</a>
+    <a class="nav-link" href="https://github.com/Benedikt-Frenzel/vcf-compliance" target="_blank" rel="noopener">GitHub ↗</a>
+  </nav>
 </header>
+<div class="disclaimer" role="note">
+  <span class="disclaimer-icon" aria-hidden="true">ⓘ</span>
+  <span><strong>Independent community project.</strong> Not affiliated with, endorsed by, or supported by Broadcom Inc. or any of its subsidiaries. Review and test generated content before production use.</span>
+</div>
 
 <div class="main-container">
   <div class="content-container">
-    <div class="content-area">
-
-      <div class="alert alert-info" role="alert">
-        <div class="alert-items">
-          <div class="alert-item static">
-            <div class="alert-icon-wrapper"><span class="alert-icon">&#9432;</span></div>
-            <span class="alert-text">
-              This is a personal, community project. It is <strong>not</strong> an official Broadcom product and is
-              <strong>not supported by Broadcom or its subsidiaries</strong>. Generated XML must be reviewed and tested
-              before importing into a production VMware Aria Operations environment.
-            </span>
-          </div>
+    <main class="content-area" id="main">
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <span class="eyebrow">Security configuration · VCF Operations</span>
+          <h1 id="page-title">Compliance scorecard builder</h1>
+          <p>Customize benchmark rules and export ready-to-import alert definitions and a compliance scorecard for VMware Aria Operations.</p>
         </div>
+        <aside class="hero-aside" aria-label="Benchmark summary">
+          <strong>144 rules</strong>
+          <span>Across 9 resource kinds, processed locally in your browser.</span>
+          <a href="#rules" class="btn btn-sm btn-outline">Review rules</a>
+        </aside>
+      </section>
+
+      <div class="alert alert-info notice" role="alert">
+        <div class="alert-items"><div class="alert-item static">
+          <div class="alert-icon-wrapper"><span class="alert-icon">ⓘ</span></div>
+          <span class="alert-text">Customizations stay in this browser. Generated XML must be reviewed and tested in a non-production VCF Operations environment before rollout.</span>
+        </div></div>
       </div>
 
-      <div class="card">
-        <div class="card-header">Export settings</div>
+      <section class="card" aria-labelledby="settings-title">
+        <div class="card-header" id="settings-title">Export settings<small>Configure stable definition metadata before downloading the generated XML.</small></div>
         <div class="card-block">
           <div class="settings-grid">
-            <div>
-              <label for="scorecardName">Scorecard name</label>
-              <input type="text" id="scorecardName" class="clr-input" value="VCF Security Benchmark">
-            </div>
-            <div>
-              <label for="severity">Symptom severity</label>
-              <div class="clr-select-wrapper">
-                <select id="severity" class="clr-select">
-                  <option value="critical">Critical</option>
-                  <option value="immediate">Immediate</option>
-                  <option value="warning" selected>Warning</option>
-                  <option value="info">Info</option>
-                </select>
-              </div>
-            </div>
-            <div>
-              <label for="idPrefix">Definition ID prefix</label>
-              <input type="text" id="idPrefix" class="clr-input" value="VCF-SEC">
-            </div>
-            <div>
-              <!-- wrapper spans own the hover/focus reveal: disabled <button>s
-                   never receive focus and don't dispatch mouseenter/leave -->
-              <span class="download-wrap" id="downloadAlertsWrap"><button id="downloadAlerts" class="btn btn-primary">Download Alert &amp; Symptom Definitions</button></span>
-              <span class="download-wrap" id="downloadScorecardWrap"><button id="downloadScorecard" class="btn btn-outline">Download Compliance Scorecard</button></span>
+            <div><label class="field-label" for="scorecardName">Scorecard name</label><input type="text" id="scorecardName" class="clr-input" value="VCF Security Benchmark"></div>
+            <div><label class="field-label" for="severity">Symptom severity</label><div class="clr-select-wrapper"><select id="severity" class="clr-select"><option value="critical">Critical</option><option value="immediate">Immediate</option><option value="warning" selected>Warning</option><option value="info">Info</option></select></div></div>
+            <div><label class="field-label" for="idPrefix">Definition ID prefix</label><input type="text" id="idPrefix" class="clr-input" value="VCF-SEC"></div>
+            <div class="export-actions">
+              <span class="download-wrap" id="downloadAlertsWrap"><button id="downloadAlerts" class="btn btn-primary">Download alert definitions</button></span>
+              <span class="download-wrap" id="downloadScorecardWrap"><button id="downloadScorecard" class="btn btn-outline">Download scorecard</button></span>
               <button id="resetAll" class="btn btn-link-danger">Reset all customizations</button>
             </div>
           </div>
-          <style>[hidden]{display:none !important;}</style>
-          <div id="prefixWarning" class="alert alert-warning" role="alert" hidden>
-            <div class="alert-items">
-              <div class="alert-item static">
-                <div class="alert-icon-wrapper"><span class="alert-icon">&#9888;</span></div>
-                <span class="alert-text" id="prefixWarningText"></span>
-              </div>
-            </div>
-          </div>
-          <div id="exportError" class="alert alert-danger" role="alert" hidden>
-            <div class="alert-items">
-              <div class="alert-item static">
-                <div class="alert-icon-wrapper"><span class="alert-icon">&#9888;</span></div>
-                <span class="alert-text">
-                  Export is disabled: <strong><span id="exportErrorCount">0</span> included rule(s)</strong> have invalid
-                  operator/value/valueType combinations &mdash; Aria Operations would reject or misinterpret the generated XML.
-                  Fix the highlighted values or exclude those rules.
-                  <ul id="exportErrorList" style="margin: 0.3rem 0 0; padding-left: 1.1rem; text-align: left;"></ul>
-                </span>
-              </div>
-            </div>
+          <div id="prefixWarning" class="alert alert-warning" role="alert" hidden><div class="alert-items"><div class="alert-item static"><div class="alert-icon-wrapper"><span class="alert-icon">⚠</span></div><span class="alert-text" id="prefixWarningText"></span></div></div></div>
+          <div id="exportError" class="alert alert-danger" role="alert" hidden><div class="alert-items"><div class="alert-item static"><div class="alert-icon-wrapper"><span class="alert-icon">⚠</span></div><span class="alert-text">Export is disabled: <strong><span id="exportErrorCount">0</span> included rule(s)</strong> have invalid operator/value/valueType combinations. Fix the highlighted values or exclude those rules.<ul id="exportErrorList" style="margin: .3rem 0 0; padding-left: 1.1rem; text-align: left;"></ul></span></div></div></div>
+        </div>
+      </section>
+
+      <section id="rules" aria-label="Compliance rules">
+        <div class="toolbar">
+          <div role="search"><label for="search">Search rules</label><input type="search" id="search" class="clr-input" placeholder="Description, key, SCG ID…"></div>
+          <div><label for="resourceFilter">Resource kind</label><div class="clr-select-wrapper"><select id="resourceFilter" class="clr-select"><option value="">All resources</option></select></div></div>
+          <div class="clr-checkbox-wrapper"><input type="checkbox" id="modifiedOnly"><label for="modifiedOnly">Modified only</label></div>
+          <div class="filter-actions"><button id="includeFiltered" class="btn btn-sm btn-outline">Include filtered</button><button id="excludeFiltered" class="btn btn-sm btn-outline">Exclude filtered</button></div>
+          <div class="counts" aria-live="polite">
+            <span class="label label-danger" id="invalidCountWrap" hidden tabindex="0" role="status" title="Some included rules have invalid values. Hover or focus here for details."><span id="countInvalid">0</span> invalid</span>
+            <span class="label label-blue"><span id="countIncluded">0</span> included</span>
+            <span class="label label-purple"><span id="countModified">0</span> modified</span>
+            <span class="label"><span id="countTotal">0</span> rules</span>
           </div>
         </div>
-      </div>
 
-      <div class="toolbar">
-        <div role="search">
-          <label for="search">Search</label>
-          <input type="search" id="search" class="clr-input" placeholder="description, key, SCG ID&hellip;">
+        <div class="table-wrapper" tabindex="0" aria-label="Scrollable compliance rule table">
+          <table class="table table-compact"><caption class="sr-only">Compliance rules and export conditions</caption><thead><tr>
+            <th scope="col"><span class="sr-only">Include rule</span></th><th scope="col">Resource</th><th scope="col">SCG ID</th><th scope="col">Description</th><th scope="col">Condition key</th><th scope="col">Type</th><th scope="col">Operator</th><th scope="col">Value</th><th scope="col">Actions</th>
+          </tr></thead><tbody id="rulesBody"></tbody></table>
         </div>
-        <div>
-          <label for="resourceFilter">Resource kind</label>
-          <div class="clr-select-wrapper">
-            <select id="resourceFilter" class="clr-select"><option value="">All</option></select>
-          </div>
-        </div>
-        <div class="clr-checkbox-wrapper">
-          <input type="checkbox" id="modifiedOnly">
-          <label for="modifiedOnly">modified only</label>
-        </div>
-        <div>
-          <button id="includeFiltered" class="btn btn-sm btn-outline">Include filtered</button>
-          <button id="excludeFiltered" class="btn btn-sm btn-outline">Exclude filtered</button>
-        </div>
-        <div class="counts" aria-live="polite">
-          <span class="label label-danger" id="invalidCountWrap" hidden tabindex="0" role="status" title="Some included rules have invalid values. Hover or focus here for details."><span id="countInvalid">0</span> invalid</span>
-          <span class="label label-blue"><span id="countIncluded">0</span> included</span>
-          <span class="label label-purple"><span id="countModified">0</span> modified</span>
-          <span class="label"><span id="countTotal">0</span> rules</span>
-        </div>
-      </div>
+      </section>
 
-      <div class="table-wrapper">
-        <table class="table table-compact">
-          <thead>
-            <tr>
-              <th scope="col"><span class="sr-only">Include rule</span></th>
-              <th scope="col">Resource</th>
-              <th scope="col">SCG ID</th>
-              <th scope="col">Description</th>
-              <th scope="col">Condition key</th>
-              <th scope="col">Type</th>
-              <th scope="col">Operator</th>
-              <th scope="col">Value</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="rulesBody"></tbody>
-        </table>
-      </div>
-
-      <footer>
-        Rule defaults follow the strictest requirement across the
-        <a href="https://www.vmware.com/resources/hardening-guides" target="_blank" rel="noopener">vSphere 8 Security Configuration Guide</a>
-        and the ISO 27001 compliance check for VCF Operations from the
-        <a href="https://vcf.broadcom.com/vsc/" target="_blank" rel="noopener">VCF Solutions Catalog</a>.
-        Customizations are stored locally in your browser only.
-        Personal project &mdash; not supported by Broadcom or its subsidiaries.
+      <footer class="site-footer">
+        Rule defaults follow the strictest requirement across the <a href="https://www.vmware.com/resources/hardening-guides" target="_blank" rel="noopener">vSphere 8 Security Configuration Guide</a> and the ISO 27001 compliance check for VCF Operations from the <a href="https://vcf.broadcom.com/vsc/" target="_blank" rel="noopener">VCF Solutions Catalog</a>. Customizations are stored locally. · <a href="https://benedikt-frenzel.github.io/vcf-tools/">VCF Tools</a> · Built with <a href="https://clarity.design/">Clarity Design</a>.
       </footer>
-
-    </div>
+    </main>
   </div>
 </div>
 
