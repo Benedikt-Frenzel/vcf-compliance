@@ -54,8 +54,9 @@ test("shared VCF Tools navbar marks Compliance as active", () => {
   const dom = loadPage();
   const doc = dom.window.document;
   assert.equal(doc.querySelector("header .brand-copy .title").textContent, "VCF Tools");
-  assert.deepEqual([...doc.querySelectorAll("header .header-actions .nav-link")].map(link => link.textContent.trim()), ["Overview", "Ports", "Compliance", "GitHub ↗"]);
+  assert.deepEqual([...doc.querySelectorAll("header .header-actions .nav-link")].map(link => link.textContent.trim()), ["Overview", "Ports", "Compliance", "Feedback ✉", "GitHub ↗"]);
   assert.equal(doc.querySelector("header .header-actions .active").textContent.trim(), "Compliance");
+  assert.match(doc.querySelector('header .header-actions a[href^="mailto:"]').href, /subject=%5BVCF%20Compliance%5D%20Feedback/);
   dom.window.close();
 });
 
