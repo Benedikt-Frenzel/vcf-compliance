@@ -32,10 +32,10 @@
     </div>
   </nav>
 </header>
-<div class="disclaimer" role="note">
+<aside class="disclaimer" aria-label="Disclaimer">
   <span class="disclaimer-icon" aria-hidden="true">ⓘ</span>
   <span><strong>Independent community project.</strong> Not affiliated with, endorsed by, or supported by Broadcom Inc. or any of its subsidiaries. Review and test generated content before production use.</span>
-</div>
+</aside>
 
 <div class="main-container">
   <div class="content-container">
@@ -334,6 +334,7 @@ function buildTable() {
     typeWrap.className = "clr-select-wrapper";
     const typeSel = document.createElement("select");
     typeSel.className = "clr-select";
+    typeSel.setAttribute("aria-label", "Condition type for " + rule.conditionKey);
     for (const t of ["property", "metric"]) {
       const opt = document.createElement("option");
       opt.value = t; opt.textContent = t;
@@ -352,6 +353,7 @@ function buildTable() {
     opWrap.className = "clr-select-wrapper";
     const opSel = document.createElement("select");
     opSel.className = "clr-select";
+    opSel.setAttribute("aria-label", "Operator for " + rule.conditionKey);
     for (const op of OPERATORS) {
       const opt = document.createElement("option");
       opt.value = op; opt.textContent = op;
@@ -369,6 +371,7 @@ function buildTable() {
     const valInput = document.createElement("input");
     valInput.type = "text";
     valInput.className = "clr-input value-input";
+    valInput.setAttribute("aria-label", "Value for " + rule.conditionKey);
     valInput.addEventListener("input", () => {
       const clean = sanitizeValue(valInput.value); // strip XML-illegal control chars on input
       if (clean !== valInput.value) valInput.value = clean;
