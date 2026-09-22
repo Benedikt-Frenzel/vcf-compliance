@@ -1,5 +1,5 @@
 :root {
-  color-scheme: light;
+  color-scheme: light dark;
   --brand-forest: #182418;
   --brand-forest-mid: #243024;
   --brand-pine: #2f4636;
@@ -222,3 +222,165 @@ tr.excluded td { opacity: .48; }
   .site-header .header-actions .nav-link { padding: 0 3px; font-size: 11px; }
   .filter-actions { flex-wrap: wrap; }
 }
+
+/* ---------- Theme switcher ---------- */
+.theme-switcher{
+  display:inline-flex;align-items:center;align-self:center;margin:0 4px 0 10px;padding:3px;
+  border:1px solid rgba(243,230,204,.28);border-radius:var(--vcf-radius,4px);background:rgba(0,0,0,.18);
+}
+.theme-switcher button{
+  appearance:none;border:0;margin:0;padding:6px 10px;border-radius:3px;
+  background:transparent;color:rgba(250,246,238,.72);font:600 11px/1.2 inherit;
+  letter-spacing:.02em;cursor:pointer;
+}
+.theme-switcher button:hover{color:#fff;background:rgba(193,156,98,.14)}
+.theme-switcher button.active{color:var(--brand-forest,#182418);background:var(--brand-gold,#c19c62)}
+.theme-switcher button:focus-visible{outline:2px solid var(--brand-gold,#c19c62);outline-offset:1px}
+@media (max-width:680px){
+  .theme-switcher{margin-left:4px}
+  .theme-switcher button{padding:6px 7px;font-size:10.5px}
+}
+
+/* ---------- Forest Moon dark ---------- */
+[cds-theme~="dark"]{
+  color-scheme:dark;
+  --brand-pine-soft:#2a382e;
+  --brand-gold-soft:#3a3220;
+  --brand-cream-soft:#1a241c;
+  --brand-ink:#f4ecdc;
+  --brand-muted:#aab6a8;
+  --brand-border:#3a4a3c;
+  --brand-border-soft:#2c3a30;
+
+  --vcf-primary:var(--brand-gold);
+  --vcf-primary-strong:#e4cc90;
+  --vcf-primary-soft:var(--brand-pine-soft);
+  --vcf-ink:var(--brand-ink);
+  --vcf-muted:var(--brand-muted);
+  --vcf-canvas:#121a14;
+  --vcf-surface:#1c281f;
+  --vcf-border:var(--brand-border);
+  --vcf-border-soft:var(--brand-border-soft);
+  --vcf-shadow:0 1px 3px rgba(0,0,0,.35);
+  --vcf-accent:var(--brand-gold);
+  --vcf-warm:var(--brand-gold);
+  --vcf-warm-strong:#e4cc90;
+  --vcf-warm-soft:var(--brand-gold-soft);
+
+  --vp-primary:var(--brand-gold);
+  --vp-primary-strong:#e4cc90;
+  --vp-primary-soft:var(--brand-pine-soft);
+  --vp-teal:#8fad96;
+  --vp-ink:var(--brand-ink);
+  --vp-muted:var(--brand-muted);
+  --vp-faint:#8a9688;
+  --vp-canvas:#121a14;
+  --vp-surface:#1c281f;
+  --vp-border:var(--brand-border);
+  --vp-border-soft:var(--brand-border-soft);
+  --vp-warm:var(--brand-gold);
+  --vp-warm-strong:#e4cc90;
+  --vp-warm-soft:var(--brand-gold-soft);
+  --vp-accent:var(--brand-gold);
+  --vp-shadow:0 1px 2px rgba(0,0,0,.35);
+
+  --cds-alias-status-info:var(--brand-gold);
+  --cds-alias-status-info-tint:var(--brand-pine-soft);
+  --cds-alias-status-info-shade:#e4cc90;
+  --cds-alias-status-success:#8fad96;
+  --cds-alias-status-warning:var(--brand-gold);
+  --cds-alias-object-app-background:#121a14;
+  --cds-alias-object-container-background:#1c281f;
+  --cds-alias-object-border-color:var(--brand-border);
+  --cds-alias-object-interaction-color:var(--brand-gold);
+  --cds-alias-object-interaction-color-hover:#e4cc90;
+  --cds-alias-object-interaction-background-hover:var(--brand-pine-soft);
+  --cds-alias-object-interaction-background-highlight:var(--brand-gold-soft);
+
+  --clr-btn-primary-bg-color:var(--brand-gold);
+  --clr-btn-primary-border-color:var(--brand-gold);
+  --clr-btn-primary-color:var(--brand-forest);
+  --clr-btn-primary-hover-bg-color:#e4cc90;
+  --clr-btn-primary-hover-color:var(--brand-forest);
+  --clr-btn-primary-active-bg-color:#9a7840;
+  --clr-btn-primary-active-color:#fff;
+  --clr-btn-primary-checked-bg-color:var(--brand-gold);
+  --clr-btn-primary-checked-color:var(--brand-forest);
+  --clr-btn-primary-disabled-bg-color:#4a564c;
+  --clr-btn-primary-disabled-border-color:#4a564c;
+  --clr-btn-primary-disabled-color:#aab6a8;
+  --clr-btn-primary-outline-bg-color:transparent;
+  --clr-btn-primary-outline-border-color:var(--brand-gold);
+  --clr-btn-primary-outline-color:var(--brand-gold);
+  --clr-btn-primary-outline-hover-bg-color:var(--brand-pine-soft);
+  --clr-btn-primary-outline-hover-color:#e4cc90;
+  --clr-btn-primary-outline-active-bg-color:var(--brand-gold-soft);
+  --clr-btn-primary-outline-active-color:#e4cc90;
+  --clr-btn-link-color:var(--brand-gold);
+  --clr-btn-link-hover-color:#e4cc90;
+  --clr-link-color:var(--brand-gold);
+  --clr-link-hover-color:#e4cc90;
+  --clr-label-info-bg-color:var(--brand-pine-soft);
+  --clr-label-info-color:#e4cc90;
+  --clr-label-info-border-color:#3a4a3c;
+}
+
+[cds-theme~="dark"] .disclaimer{
+  background:var(--brand-gold-soft);color:#e4cc90;border-bottom-color:#4a4030;
+}
+[cds-theme~="dark"] .disclaimer-icon{color:var(--brand-gold)}
+[cds-theme~="dark"] .hero-copy{
+  background:linear-gradient(135deg,var(--vcf-surface,#1c281f) 0%,var(--brand-pine-soft) 100%);
+}
+[cds-theme~="dark"] .card-footer,
+[cds-theme~="dark"] .coverage-item{background:var(--brand-cream-soft)}
+[cds-theme~="dark"] .label-blue,
+[cds-theme~="dark"] .label.label-info{
+  background:var(--brand-pine-soft)!important;color:#e4cc90!important;border-color:#3a4a3c!important;
+}
+[cds-theme~="dark"] .label-purple{
+  background:var(--brand-gold-soft)!important;color:#e4cc90!important;border-color:#4a4030!important;
+}
+[cds-theme~="dark"] table.table tbody tr:nth-child(even),
+[cds-theme~="dark"] .connection-table tbody tr:nth-child(even){background:#182218}
+[cds-theme~="dark"] table.table thead th,
+[cds-theme~="dark"] .connection-table th,
+[cds-theme~="dark"] .matrix-table th{background:var(--brand-pine-soft);color:var(--brand-muted)}
+[cds-theme~="dark"] .matrix-table tbody th{background:var(--vcf-surface,#1c281f)}
+[cds-theme~="dark"] .density-one{background:#243024;color:#e4cc90}
+[cds-theme~="dark"] .density-few{background:#2f4636;color:#f4ecdc}
+[cds-theme~="dark"] .density-many{background:var(--brand-gold);color:var(--brand-forest)}
+[cds-theme~="dark"] .topology-scroll{background:linear-gradient(180deg,#182218,#121a14)}
+[cds-theme~="dark"] .topology .zone{fill:#1c281f;stroke:#3a4a3c}
+[cds-theme~="dark"] .topology .zone-fleet{fill:#243024}
+[cds-theme~="dark"] .topology .zone-instance{fill:#1f2c22;stroke:#5a6e5c}
+[cds-theme~="dark"] .topology .zone-inner{fill:#182218;stroke:#3a4a3c}
+[cds-theme~="dark"] .topology .zone-platform{fill:#24301f}
+[cds-theme~="dark"] .topology .zone-external{fill:#1a2218}
+[cds-theme~="dark"] .topology .zone-title{fill:#e4cc90}
+[cds-theme~="dark"] .topology .inner-title{fill:#aab6a8}
+[cds-theme~="dark"] .topology .link{stroke:#6e7f6c}
+[cds-theme~="dark"] .topology .edge.highlighted .link{stroke:var(--brand-gold)}
+[cds-theme~="dark"] .topology .edge:hover .link,
+[cds-theme~="dark"] .topology .edge:focus .link{stroke:#e4cc90}
+[cds-theme~="dark"] .topology .edge-label{fill:#e4cc90;stroke:#1c281f}
+[cds-theme~="dark"] .topology .node rect{fill:#1c281f;stroke:#5a6e5c}
+[cds-theme~="dark"] .topology .node text{fill:#f4ecdc}
+[cds-theme~="dark"] .topology .node .node-count{fill:#aab6a8}
+[cds-theme~="dark"] .topology .node:hover rect,
+[cds-theme~="dark"] .topology .node:focus rect{stroke:var(--brand-gold)}
+[cds-theme~="dark"] .topology .node.selected rect{fill:var(--brand-gold);stroke:#9a7840}
+[cds-theme~="dark"] .topology .node.selected text{fill:var(--brand-forest)}
+[cds-theme~="dark"] .topology .node.connected rect{fill:#2f4636;stroke:var(--brand-gold)}
+[cds-theme~="dark"] .direction-group>summary{background:#182218}
+[cds-theme~="dark"] .port-chip{background:var(--brand-pine-soft);color:var(--brand-ink)}
+[cds-theme~="dark"] .protocol-badge{border-color:#3a4a3c;background:var(--brand-pine-soft);color:#e4cc90}
+[cds-theme~="dark"] .classification-badge{background:var(--brand-pine-soft);color:var(--brand-muted)}
+[cds-theme~="dark"] .domain-badge.broadcom{background:var(--brand-pine-soft);border-color:#3a4a3c;color:#e4cc90}
+[cds-theme~="dark"] .count-badge{background:var(--brand-pine-soft);color:var(--brand-muted)}
+[cds-theme~="dark"] .view-tab.active{color:var(--brand-forest)}
+[cds-theme~="dark"] .matrix-cell{border-color:#3a4a3c;background:var(--brand-pine-soft);color:#e4cc90}
+[cds-theme~="dark"] .legend-box{background:#1c281f;border-color:#5a6e5c}
+[cds-theme~="dark"] .hero-visual{background:var(--brand-pine-soft)}
+[cds-theme~="dark"] .stack-card{background:var(--vcf-surface,#1c281f)}
+[cds-theme~="dark"] .feature-list li::before{color:#8fad96}
