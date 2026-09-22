@@ -44,7 +44,7 @@ a:hover { color: var(--vcf-primary-strong); }
 .brand-mark {
   display: inline-flex; align-items: center; justify-content: center; flex: 0 0 36px;
   width: 36px; height: 36px; border-radius: var(--vcf-radius);
-  background: var(--vcf-primary); color: #fff; font-size: 18px; font-weight: 600;
+  background: var(--vcf-primary); color: #fff; font-size: 17px;
 }
 .brand-copy { display: inline-flex; flex-direction: column; line-height: 1.15; }
 .brand-copy .title { color: #fff; font-size: 17px; font-weight: 600; }

@@ -50,6 +50,15 @@ function parseXml(dom, xml) {
   return doc;
 }
 
+test("shared VCF Tools navbar marks Compliance as active", () => {
+  const dom = loadPage();
+  const doc = dom.window.document;
+  assert.equal(doc.querySelector("header .brand-copy .title").textContent, "VCF Tools");
+  assert.deepEqual([...doc.querySelectorAll("header .header-actions .nav-link")].map(link => link.textContent.trim()), ["Overview", "Ports", "Compliance", "GitHub ↗"]);
+  assert.equal(doc.querySelector("header .header-actions .active").textContent.trim(), "Compliance");
+  dom.window.close();
+});
+
 function rowFor(dom, id) {
   return dom.window.document.querySelector(`tr[data-id="${id}"]`);
 }
