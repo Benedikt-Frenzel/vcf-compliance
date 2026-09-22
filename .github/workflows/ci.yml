@@ -25,7 +25,7 @@ jobs:
           git diff --exit-code -- rules.js
 
   node:
-    name: Node jsdom page tests
+    name: Node jsdom page + a11y tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -38,5 +38,5 @@ jobs:
       - name: Install dev dependencies
         run: npm ci
 
-      - name: Run page tests
+      - name: Run page and accessibility tests
         run: node --test
