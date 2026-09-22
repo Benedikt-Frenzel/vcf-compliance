@@ -121,15 +121,16 @@ CI (`.github/workflows/ci.yml`) runs on every push and pull request:
   `test/fixtures/baseline-conditions.json` (extracted from the baseline export,
   so CI does not need the sibling repository). A freshness check also proves
   that the committed `rules.js` matches what `tools/build_rules.py` regenerates.
-- **node** – `npm ci && node --test` runs the jsdom page tests in `test/`
-  (renders the 144-rule table, exercises include/operator/value overrides via
-  real DOM events, and validates the generated XML).
+- **node** – `npm ci && node --test` runs the jsdom page tests and accessibility
+  suite in `test/` (renders the 144-rule table, exercises include/operator/value
+  overrides via real DOM events, validates the generated XML, and runs axe-core
+  WCAG 2 A/AA checks plus chrome/table a11y assertions).
 
 Locally:
 
 ```bash
 python3 -m unittest discover -s test -v   # Python tests
-npm install && npm test                    # jsdom page tests
+npm install && npm test                    # jsdom page + a11y tests
 ```
 
 When the baseline export in the sibling repository changes, refresh the
