@@ -115,7 +115,7 @@ test("default export is well-formed and carries the inverted-operator symptoms",
   assertCondition("config|boot_options_efi_secure_boot_enabled", { operator: "=", value: "false", valueType: "string", type: "property" });
   assertCondition("config|extraConfig|mem_tps_share", { operator: "=", value: "true", valueType: "string", type: "property" });
   assertCondition("security|NtpServersCount", { operator: "<", value: "3.0", valueType: "numeric", type: "metric" });
-  assertCondition("config|version", { operator: "regex", value: "vmx-[1-9]|vmx-1[0-8]", valueType: "string", type: "property" });
+  assertCondition("config|version", { operator: "regex", value: "^vmx-([1-9]|1[0-8])$", valueType: "string", type: "property" });
   assertCondition("config|security|service:NTP Daemon|isRunning", { operator: "!=", value: "true", valueType: "string", type: "property" });
   assertCondition("config|security|syslog_host", { operator: "regex", value: "^(false|none)$", valueType: "string", type: "property" });
 

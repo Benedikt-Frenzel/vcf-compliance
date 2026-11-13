@@ -1721,7 +1721,7 @@ const RULES_DATA = {
       "conditionKey": "config|version",
       "type": "property",
       "operator": "regex",
-      "value": "vmx-[1-9]|vmx-1[0-8]",
+      "value": "^vmx-([1-9]|1[0-8])$",
       "valueType": "string",
       "note": "SCG 7 flags <=vmx-12 and SCG 8 flags <=vmx-18 as violations -> strictest requirement: hardware version >= vmx-19. Derivation: required: hardware version >= vmx-19; regex matches the violating (lower) hardware versions."
     },
