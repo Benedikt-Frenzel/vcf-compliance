@@ -34,6 +34,43 @@ DEFAULT_BASELINE = (
 # condition_key -> why the generated single condition intentionally differs from
 # the (multi-variant or contradictory) baseline export.
 KNOWN_DEVIATIONS = {
+    "config|security|dcui_timeout": (
+        "baseline fires on '< 600' (flags stricter, passes laxer timeouts); "
+        "idle timeout: lower is stricter, so the violation is '> 600'. "
+        "'= 0' (disabled) is an accepted blind spot of the single condition"
+    ),
+    "config|security|host_client_session_timeout": (
+        "baseline fires on '< 900'; idle timeout: violation is '> 900'. "
+        "'= 0' (disabled) is an accepted blind spot"
+    ),
+    "ComplianceMetrics|HttpSessionTimeOut": (
+        "baseline '!= 1800' also flags stricter (shorter) timeouts; maximum "
+        "semantics: violation is '> 1800'"
+    ),
+    "summary|ComplianceMetrics|CLITimeOutInSeconds": (
+        "baseline '!= 600' also flags stricter (shorter) timeouts; maximum "
+        "semantics: violation is '> 600'"
+    ),
+    "summary|ComplianceMetrics|authPolicy|minimum_password_length": (
+        "baseline '!= 12' also flags longer (stricter) minimums; minimum "
+        "semantics: violation is '< 12'"
+    ),
+    "summary|ComplianceMetrics|authPolicy|apiAuthPolicy|max_auth_failures": (
+        "baseline '!= 3' also flags fewer (stricter) attempts; maximum "
+        "semantics: violation is '> 3'"
+    ),
+    "summary|ComplianceMetrics|authPolicy|cliAuthPolicy|max_auth_failures": (
+        "baseline '!= 3' also flags fewer (stricter) attempts; maximum "
+        "semantics: violation is '> 3'"
+    ),
+    "summary|ComplianceMetrics|authPolicy|apiAuthPolicy|failed_auth_lockout_period": (
+        "baseline '!= 900' also flags longer (stricter) lockouts; minimum "
+        "semantics: violation is '< 900'"
+    ),
+    "summary|ComplianceMetrics|authPolicy|cliAuthPolicy|failed_auth_lockout_period": (
+        "baseline '!= 900' also flags longer (stricter) lockouts; minimum "
+        "semantics: violation is '< 900'"
+    ),
     "config|security|disable_unexposed_features_unity_unityactive": (
         "baseline export is contradictory ('= false', '!= none', '!= true'); "
         "conservative single condition fires only when Unity IS active"

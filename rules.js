@@ -40,7 +40,7 @@ const RULES_DATA = {
       "description": "Management Service \"http\" have session_timeout set to non-recommended value.",
       "conditionKey": "ComplianceMetrics|HttpSessionTimeOut",
       "type": "property",
-      "operator": "!=",
+      "operator": ">",
       "value": "1800.0",
       "valueType": "numeric",
       "note": ""
@@ -390,10 +390,10 @@ const RULES_DATA = {
       "description": "The idle connections to DCUI to terminate left over login session is not set to desired value",
       "conditionKey": "config|security|dcui_timeout",
       "type": "property",
-      "operator": "<",
+      "operator": ">",
       "value": "600.0",
       "valueType": "numeric",
-      "note": "Symptom reports <600 because 0 means disabled. Reference value: 600. Derivation: timeout reference value; the violation is '<' reference (0 = disabled also fires)."
+      "note": "Idle timeout: lower is stricter (SCG: 600 s or less) -> symptom reports >600; 0 = disabled is not covered by the single condition. Derivation: timeout reference value; the violation is '>' reference (allowed range 1-reference; the disabled state '= 0' is not covered)."
     },
     {
       "id": "SymptomDefinition-VCF-SEC-VM-Deactivate-VMtools-autoinstall",
@@ -1146,10 +1146,10 @@ const RULES_DATA = {
       "description": "The ESXi host client sessions timeout is violating the recommended value",
       "conditionKey": "config|security|host_client_session_timeout",
       "type": "property",
-      "operator": "<",
+      "operator": ">",
       "value": "900.0",
       "valueType": "numeric",
-      "note": "Analogous to the DCUI timeout: symptom reports <900; reference 900 s. Derivation: timeout reference value; the violation is '<' reference (0 = disabled also fires)."
+      "note": "Analogous to the DCUI timeout: symptom reports >900; 0 = disabled is not covered. Derivation: timeout reference value; the violation is '>' reference (allowed range 1-reference; the disabled state '= 0' is not covered)."
     },
     {
       "id": "SymptomDefinition-VCF-SEC-config-security-imageConfig-acceptance-level-risk-profile-2",
@@ -1776,7 +1776,7 @@ const RULES_DATA = {
       "description": "NSX Manager's 'CLI Timeout' is not set to recommended value.",
       "conditionKey": "summary|ComplianceMetrics|CLITimeOutInSeconds",
       "type": "property",
-      "operator": "!=",
+      "operator": ">",
       "value": "600.0",
       "valueType": "numeric",
       "note": ""
@@ -1804,7 +1804,7 @@ const RULES_DATA = {
       "description": "NSX Manager's Auth Policy 'API Lockout Period' is not set to recommended value.",
       "conditionKey": "summary|ComplianceMetrics|authPolicy|apiAuthPolicy|failed_auth_lockout_period",
       "type": "property",
-      "operator": "!=",
+      "operator": "<",
       "value": "900.0",
       "valueType": "numeric",
       "note": ""
@@ -1818,7 +1818,7 @@ const RULES_DATA = {
       "description": "NSX Manager's Auth Policy 'API Maximum Auth Failures' is not set to recommended value.",
       "conditionKey": "summary|ComplianceMetrics|authPolicy|apiAuthPolicy|max_auth_failures",
       "type": "property",
-      "operator": "!=",
+      "operator": ">",
       "value": "3.0",
       "valueType": "numeric",
       "note": ""
@@ -1832,7 +1832,7 @@ const RULES_DATA = {
       "description": "NSX Manager's Auth Policy 'CLI Lockout Period' is not set to recommended value.",
       "conditionKey": "summary|ComplianceMetrics|authPolicy|cliAuthPolicy|failed_auth_lockout_period",
       "type": "property",
-      "operator": "!=",
+      "operator": "<",
       "value": "900.0",
       "valueType": "numeric",
       "note": ""
@@ -1846,7 +1846,7 @@ const RULES_DATA = {
       "description": "NSX Manager's Auth Policy 'CLI Maximum Auth Failures' is not set to recommended value.",
       "conditionKey": "summary|ComplianceMetrics|authPolicy|cliAuthPolicy|max_auth_failures",
       "type": "property",
-      "operator": "!=",
+      "operator": ">",
       "value": "3.0",
       "valueType": "numeric",
       "note": ""
@@ -1860,7 +1860,7 @@ const RULES_DATA = {
       "description": "NSX Manager hasn't enforced a minimum 12-character password length.",
       "conditionKey": "summary|ComplianceMetrics|authPolicy|minimum_password_length",
       "type": "property",
-      "operator": "!=",
+      "operator": "<",
       "value": "12.0",
       "valueType": "numeric",
       "note": ""
