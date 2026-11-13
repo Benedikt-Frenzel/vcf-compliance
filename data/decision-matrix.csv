@@ -1,7 +1,7 @@
 resource,scg_id,description,condition_key,iso_27001,scg_6.x,scg_7,scg_8,vsan_hg,nsx-t_scg,no_alert,strictest_requirement,note
 ManagementService,–,Management Service's 'Client API Concurrency Limit' is not set to recommended value.,ComplianceMetrics|APILimits|Client_API_Concurrency_Limit,,,,,,,= 40.0,= 40.0,
 ManagementService,–,Management Service's 'Client API Rate Limit' is not set to recommended value.,ComplianceMetrics|APILimits|Client_API_Rate_Limit,,,,,,,= 100.0,= 100.0,
-ManagementService,–,"Management Service ""http"" have session_timeout set to non-recommended value.",ComplianceMetrics|HttpSessionTimeOut,,,,,,,= 1800.0,= 1800.0,
+ManagementService,–,"Management Service ""http"" have session_timeout set to non-recommended value.",ComplianceMetrics|HttpSessionTimeOut,,,,,,,= 1800.0,≤ 1800.0,
 ManagementService,–,"Logging-servers are not configured with log level as ""INFO"".",ComplianceMetrics|LoggingServerWithLogLevelNotInfoFound,,,,,,≠ true,,≠ true,
 ManagementService,–,Logging-servers are not configured.,ComplianceMetrics|NumberOfLoggingServers,,,,,,,≠ 0.0,≠ 0.0,
 ManagementService,–,Management Service in context is 'syslog'.,ComplianceMetrics|ServiceName,,,,,,≠ syslog,,≠ syslog,
@@ -26,7 +26,7 @@ DistributedVirtualPortgroup,vNetwork.reject-promiscuous-mode-dvportgroup,The Pro
 DistributedVirtualPortgroup,vNetwork.reject-forged-transmit-dvportgroup,The Forged Transmits policy is not set to reject,config|policies|security|forged_transmits,≠ true,≠ true,≠ true,≠ true,,,,≠ true,
 DistributedVirtualPortgroup,vNetwork.reject-mac-changes-dvportgroup,The MAC Address Changes policy is not set to reject,config|policies|security|mac_changes,≠ true,≠ true,≠ true,≠ true,,,,≠ true,
 HostSystem,ESXi.set-dcui-access,DCUI.Access is not set for trusted users to override lockdown mode,config|security|dcui_access,≠ none,≠ none,≠ none,≠ none,,,,≠ none,
-HostSystem,ESXi.set-dcui-timeout,The idle connections to DCUI to terminate left over login session is not set to desired value,config|security|dcui_timeout,≥ 600.0,≥ 600.0,≥ 600.0,≥ 600.0,,,,600,Symptom reports <600 because 0 means disabled. Reference value: 600.
+HostSystem,ESXi.set-dcui-timeout,The idle connections to DCUI to terminate left over login session is not set to desired value,config|security|dcui_timeout,≥ 600.0,≥ 600.0,≥ 600.0,≥ 600.0,,,,600,Idle timeout: lower is stricter (SCG: 600 s or less) -> symptom reports >600; 0 = disabled is not covered by the single condition.
 VirtualMachine,VM.Deactivate-VMtools-autoinstall,Auto install of tools is activated (5.5/6.0 Hardening Guide),config|security|disable_autoinstall,≠ false,,,,,,,≠ false,
 VirtualMachine,VM.Deactivate-console-copy,Copy/paste operations are activated,config|security|disable_console_copy,≠ false,≠ false,≠ false,≠ false,,,,≠ false,
 VirtualMachine,VM.Deactivate-console-drag-n-drop,Copy/paste operations are activated,config|security|disable_console_dnd,≠ false,≠ false,≠ false,≠ false,,,,≠ false,
@@ -80,7 +80,7 @@ HostSystem,Integrity,Firewall is not configured for NTP service,config|security|
 HostSystem,–,ISO 27001-27002 : Requirements for a firewall - Firewall is not configured to restrict few or all services running on ESXi host,config|security|firewallRule:services|servicesConfigured,contains false,contains false,,,,,,contains false,
 HostSystem,–,The exception users list is violating the recommended value,config|security|has_lockdown_exception_users,,,≠ true,≠ true,,,,≠ true,
 HostSystem,–,ESXi.set-info-logging-level - The log level is not set to info,config|security|host_agent_log_level,,,= info,= info,,,,= info,
-HostSystem,–,The ESXi host client sessions timeout is violating the recommended value,config|security|host_client_session_timeout,,,,≥ 900.0,,,,900,Analogous to the DCUI timeout: symptom reports <900; reference 900 s.
+HostSystem,–,The ESXi host client sessions timeout is violating the recommended value,config|security|host_client_session_timeout,,,,≥ 900.0,,,,900,Analogous to the DCUI timeout: symptom reports >900; 0 = disabled is not covered.
 HostSystem,–,ESXi.verify-acceptance-level-accepted - Image Profile and VIB Acceptance Levels are neither VMware Certified nor VMware Accepted,config|security|imageConfig|acceptance_level_risk_profile_2,,,= true,= true,,,,= true,
 HostSystem,–,ISO 27001-27002 - CONFIGURATION SETTINGS-The Image Profile and VIB Acceptance Levels must be verified,config|security|imageConfig|acceptance_level_risk_profile_3,= true,,,,,,,= true,
 HostSystem,–,The SSH connection banner is not set,config|security|issue,,,,≠ false,,,,≠ false,
@@ -125,13 +125,13 @@ VirtualMachine,–,VM.set-virtual-hardware - The virtual machine hardware versio
 HostSystem,–,vSAN encryption is not enabled on ESXi host.,config|vsan|encryption,,,,,,,= Enabled,= Enabled,
 ManagementService,–,NTP Service is not configured properly,security|NtpServersCount,,,,,,,≥ 3.0,≥ 3.0,
 ManagementService,–,SSH Service is activated,security|SshEnabled,,,,,,,≠ true,≠ true,
-NSXTAdapterInstance,–,NSX Manager's 'CLI Timeout' is not set to recommended value.,summary|ComplianceMetrics|CLITimeOutInSeconds,,,,,,= 600.0,,= 600.0,
+NSXTAdapterInstance,–,NSX Manager's 'CLI Timeout' is not set to recommended value.,summary|ComplianceMetrics|CLITimeOutInSeconds,,,,,,= 600.0,,≤ 600.0,
 NSXTAdapterInstance,–,NSX manager communication to LDAP server for authentication is not using LDAPS.,summary|ComplianceMetrics|LDAPServerConfiguredWithLDAPS,,,,,,≠ false,,≠ false,
-NSXTAdapterInstance,–,NSX Manager's Auth Policy 'API Lockout Period' is not set to recommended value.,summary|ComplianceMetrics|authPolicy|apiAuthPolicy|failed_auth_lockout_period,,,,,,= 900.0,,= 900.0,
-NSXTAdapterInstance,–,NSX Manager's Auth Policy 'API Maximum Auth Failures' is not set to recommended value.,summary|ComplianceMetrics|authPolicy|apiAuthPolicy|max_auth_failures,,,,,,= 3.0,,= 3.0,
-NSXTAdapterInstance,–,NSX Manager's Auth Policy 'CLI Lockout Period' is not set to recommended value.,summary|ComplianceMetrics|authPolicy|cliAuthPolicy|failed_auth_lockout_period,,,,,,= 900.0,,= 900.0,
-NSXTAdapterInstance,–,NSX Manager's Auth Policy 'CLI Maximum Auth Failures' is not set to recommended value.,summary|ComplianceMetrics|authPolicy|cliAuthPolicy|max_auth_failures,,,,,,= 3.0,,= 3.0,
-NSXTAdapterInstance,–,NSX Manager hasn't enforced a minimum 12-character password length.,summary|ComplianceMetrics|authPolicy|minimum_password_length,,,,,,= 12.0,,= 12.0,
+NSXTAdapterInstance,–,NSX Manager's Auth Policy 'API Lockout Period' is not set to recommended value.,summary|ComplianceMetrics|authPolicy|apiAuthPolicy|failed_auth_lockout_period,,,,,,= 900.0,,≥ 900.0,
+NSXTAdapterInstance,–,NSX Manager's Auth Policy 'API Maximum Auth Failures' is not set to recommended value.,summary|ComplianceMetrics|authPolicy|apiAuthPolicy|max_auth_failures,,,,,,= 3.0,,≤ 3.0,
+NSXTAdapterInstance,–,NSX Manager's Auth Policy 'CLI Lockout Period' is not set to recommended value.,summary|ComplianceMetrics|authPolicy|cliAuthPolicy|failed_auth_lockout_period,,,,,,= 900.0,,≥ 900.0,
+NSXTAdapterInstance,–,NSX Manager's Auth Policy 'CLI Maximum Auth Failures' is not set to recommended value.,summary|ComplianceMetrics|authPolicy|cliAuthPolicy|max_auth_failures,,,,,,= 3.0,,≤ 3.0,
+NSXTAdapterInstance,–,NSX Manager hasn't enforced a minimum 12-character password length.,summary|ComplianceMetrics|authPolicy|minimum_password_length,,,,,,= 12.0,,≥ 12.0,
 NSXTAdapterInstance,–,NSX Manager is configured to conduct backups.,summary|ComplianceMetrics|backup_enabled,,,,,,≠ false / ≠ true,,true,"NSX-T backup must be enabled (symptom defined twice, direction manually verified)."
 NSXTAdapterInstance,–,SFTP server not configured for backup.,summary|ComplianceMetrics|backup_sftp_configured,,,,,,≠ false,,≠ false,
 NSXTAdapterInstance,–,NSX Manager Hardening is disabled,summary|ComplianceMetrics|hardening_status,,,,,,≠ false,,≠ false,

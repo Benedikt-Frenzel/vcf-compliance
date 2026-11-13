@@ -163,14 +163,13 @@ class ParseRequirementTests(unittest.TestCase):
                 self.assertEqual((op, value), expected)
                 self.assertTrue(note, "alias deviations must carry an explanation")
 
-    def test_dcui_style_timeout_rows_report_below_reference(self):
-        # dcui/host_client carry the matrix note "symptom reports < reference"
-        for key in sorted(build_rules.TIMEOUT_LT_REFERENCE_KEYS):
+    def test_all_idle_timeouts_report_above_reference(self):
+        # lower timeout = stricter, so a value above the reference is the violation
+        for key in ("config|security|dcui_timeout", "config|security|host_client_session_timeout"):
             with self.subTest(key=key):
+                self.assertIn(key, build_rules.TIMEOUT_GT_REFERENCE_KEYS)
                 op, value, _ = build_rules.parse_requirement("600", key)
-                self.assertEqual((op, value), ("<", "600.0"))
-                op, value, _ = build_rules.parse_requirement("= 900", key)
-                self.assertEqual((op, value), ("<", "900.0"))
+                self.assertEqual((op, value), (">", "600.0"))
 
     def test_shell_timeout_rows_report_above_reference(self):
         # shell timeouts: "allowed range 1-900 s" -> the violation is > reference

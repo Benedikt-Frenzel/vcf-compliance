@@ -74,24 +74,17 @@ COMPARISON_OPERATORS = {"=", "!=", "<", "<=", ">", ">="}
 OP_PATTERN = re.compile(r"^(<=|>=|!=|[=\u2260<\u2264>\u2265])\s*(.+)$", re.DOTALL)
 NUMERIC_PATTERN = re.compile(r"^-?\d+(\.\d+)?$")
 
-# Timeout rows carry a bare reference value in `strictest_requirement`, but the
-# violation direction differs per key:
-# - dcui_timeout / host_client_session_timeout: the matrix note says the symptom
-#   reports "< reference" (a timeout below the reference, including 0 = disabled,
-#   is the violation).
-# - shell_timeout / shell_interactive_timeout: the matrix says "Allowed range
-#   1-900 s; reference 900" and the description names "> 15 minutes" as the
-#   violation, so the violation is "> reference". The single condition does not
-#   cover the baseline's '= 0.0' (disabled) variant - accepted blind spot,
-#   documented in tools/compare_baseline.py.
-TIMEOUT_LT_REFERENCE_KEYS = frozenset(
+# Timeout rows carry a bare reference value in `strictest_requirement`. All four
+# keys are idle/session timeouts where a LOWER value is stricter (SCG: "600 s or
+# less" for DCUI, 900 s for host client and shells), so the violation is
+# "> reference". The single condition does not cover the '= 0' (disabled)
+# variant - accepted blind spot, documented in tools/compare_baseline.py.
+# Note: the baseline export models dcui/host_client as '< reference', which
+# flags stricter values and passes laxer ones; that is a documented deviation.
+TIMEOUT_GT_REFERENCE_KEYS = frozenset(
     {
         "config|security|dcui_timeout",
         "config|security|host_client_session_timeout",
-    }
-)
-TIMEOUT_GT_REFERENCE_KEYS = frozenset(
-    {
         "config|security|shell_timeout",
         "config|security|shell_interactive_timeout",
     }
@@ -233,13 +226,7 @@ def parse_requirement(raw, condition_key=""):
     # 1-900 s") and description ("more than 15 minutes") the violation is
     # "> reference"; the baseline's '= 0.0' (disabled) variant is an accepted
     # blind spot of the single-condition model.
-    if condition_key in TIMEOUT_LT_REFERENCE_KEYS and op == "!=":
-        op = "<"
-        note = (
-            "timeout reference value; the violation is '<' reference "
-            "(0 = disabled also fires)"
-        )
-    elif condition_key in TIMEOUT_GT_REFERENCE_KEYS and op == "!=":
+    if condition_key in TIMEOUT_GT_REFERENCE_KEYS and op == "!=":
         op = ">"
         note = (
             "timeout reference value; the violation is '>' reference "
