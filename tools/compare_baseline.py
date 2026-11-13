@@ -56,6 +56,11 @@ KNOWN_DEVIATIONS = {
         "and '= true'); the single condition '!= true' fires when backup is not "
         "enabled (direction per matrix note)"
     ),
+    "config|version": (
+        "baseline regex 'vmx-[1-9]|vmx-1[0-8]' is unanchored and, under find "
+        "semantics, also matches inside vmx-19+; anchored '^vmx-([1-9]|1[0-8])$' "
+        "is correct under both find and full-match semantics"
+    ),
 }
 
 

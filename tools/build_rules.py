@@ -162,13 +162,14 @@ def assert_no_german(csv_path):
 def vmx_violation_regex(min_version):
     """Regex matching hardware versions BELOW vmx-<min_version> (the violation).
 
-    Mirrors the baseline export: the requirement `vmx-19+` becomes
-    `vmx-[1-9]|vmx-1[0-8]`, which matches vmx-4 through vmx-18 (issue #1).
+    The requirement `vmx-19+` becomes `^vmx-([1-9]|1[0-8])$`, which matches
+    vmx-1 through vmx-18 and nothing else.
 
-    The regex is deliberately unanchored and byte-identical to the baseline
-    export: under substring matching `vmx-[1-9]` would also match inside
-    `vmx-19`, so this assumes Aria Operations full-string-matches the value.
-    Keep it identical to the baseline unless Aria's semantics change.
+    The regex is anchored on purpose. The baseline export uses the unanchored
+    `vmx-[1-9]|vmx-1[0-8]`, which under substring (find) semantics also
+    matches inside `vmx-19`/`vmx-20`/`vmx-21` and would flag every compliant
+    VM. The anchored form is correct under both find and full-match
+    semantics; the difference is a documented baseline deviation.
     """
     n = int(min_version)
     if not 11 <= n <= 20:
@@ -176,7 +177,7 @@ def vmx_violation_regex(min_version):
             f"cannot derive a below-vmx-{n} regex for the 'vmx-{n}+' requirement; "
             "extend tools/build_rules.py"
         )
-    return f"vmx-[1-9]|vmx-1[0-{n - 11}]"
+    return f"^vmx-([1-9]|1[0-{n - 11}])$"
 
 
 def normalize_number(value):

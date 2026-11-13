@@ -129,11 +129,11 @@ class ParseRequirementTests(unittest.TestCase):
     def test_vmx_requirement_becomes_below_regex(self):
         op, value, note = build_rules.parse_requirement("vmx-19+")
         self.assertEqual(op, "regex")
-        self.assertEqual(value, "vmx-[1-9]|vmx-1[0-8]")
+        self.assertEqual(value, "^vmx-([1-9]|1[0-8])$")
         self.assertIn("vmx-19", note)
 
         op, value, _ = build_rules.parse_requirement("vmx-13+")
-        self.assertEqual((op, value), ("regex", "vmx-[1-9]|vmx-1[0-2]"))
+        self.assertEqual((op, value), ("regex", "^vmx-([1-9]|1[0-2])$"))
 
     def test_vmx_regex_matches_exactly_the_lower_versions(self):
         for req, highest in [("vmx-13+", 12), ("vmx-19+", 18)]:
@@ -144,6 +144,16 @@ class ParseRequirementTests(unittest.TestCase):
                     self.assertIsNotNone(rx.fullmatch(f"vmx-{version}"), f"vmx-{version} should match")
                 for version in (0, highest + 1, 20, 21):
                     self.assertIsNone(rx.fullmatch(f"vmx-{version}"), f"vmx-{version} must not match")
+
+    def test_vmx_regex_never_matches_compliant_versions_as_substring(self):
+        # re.search = substring/find semantics: vmx-19+ must not fire anywhere
+        rx = re.compile(build_rules.vmx_violation_regex("19"))
+        for version in (19, 20, 21, 22, 100):
+            with self.subTest(version=version):
+                self.assertIsNone(rx.search(f"vmx-{version}"))
+        for version in (4, 9, 13, 18):
+            with self.subTest(version=version):
+                self.assertIsNotNone(rx.search(f"vmx-{version}"))
 
     def test_vmx_out_of_supported_range_raises(self):
         for bad in ("vmx-10+", "vmx-21+"):
